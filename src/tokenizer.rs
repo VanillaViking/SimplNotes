@@ -19,7 +19,7 @@ pub mod tokenizer {
                 (Some('#'), Some('#'), Some('#')) =>    self.list.push(Tokens::Heading3(String::from(&md_line[3..]))),
                 (Some('#'), Some('#'), _) =>            self.list.push(Tokens::Heading2(String::from(&md_line[2..]))),
                 (Some('#'), _, _) =>                    self.list.push(Tokens::Heading1(String::from(&md_line[1..]))),
-                (_,_,_) =>                              self.list.push(Tokens::Normal(String::from(md_line))),
+                (_,_,_) =>                              if !md_line.is_empty() { self.list.push(Tokens::Normal(String::from(md_line))) } else {()},
             }
         }
 
@@ -77,8 +77,7 @@ mod tests {
             list: vec![Tokens::Heading1(String::from("Hello, World"))],
         };
         
-        assert_eq!(&tokens.parse(), "<h1>Hello, World</h1>
-");
+        assert_eq!(&tokens.parse(), "<html>\n<h1>Hello, World</h1>\n</html>\n");
     }
 }
 
