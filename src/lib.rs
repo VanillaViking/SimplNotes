@@ -41,7 +41,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     md_contents.lines().for_each(|md_line| tokens.tokenize(&md_line));
 
     let mut out_file = File::create(config.output_file_path)?;
-    out_file.write(tokens.parse().as_bytes())?;
+    //out_file.write(tokens.parse().as_bytes())?;
 
     Ok(())
 }
